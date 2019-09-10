@@ -7,3 +7,21 @@
 	url = git://git.openembedded.org/openembedded-core
 	branch = warrior
 	warrior = warrior
+[submodule "meta-freescale"]
+	path = meta-freescale
+	url = git://git.yoctoproject.org/meta-freescale
+	branch = warrior
+[submodule "meta-openembedded"]
+	path = meta-openembedded
+	url = git://git.openembedded.org/meta-openembedded
+	branch = warrior
+[submodule "meta-datarespons"]
+	path = meta-datarespons
+	url = ssh://git@bitbucket.datarespons.com:7999/oe-dr/meta-datarespons.git
+	branch = master
+[submodule "meta-bsp-vdt6010"]
+	path = meta-bsp-vdt6010
+	url = ssh://git@bitbucket.datarespons.com:7999/oe-bsp/meta-bsp-vdt6010.git
+[submodule "meta-factory"]
+	path = meta-factory
+	url = ssh://git@bitbucket.datarespons.com:7999/oe-bsp/meta-factory.git
