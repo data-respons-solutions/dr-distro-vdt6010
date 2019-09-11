@@ -1,9 +1,11 @@
-# VDT6010 SDK
+VDT6010 SDK
+===========
 
 ## Maintainer
 Mikko Salomäki <ms@datarespons.se>
 
-## Build
+Build
+-----
 External recipe sources are included in the project as git submodules.
 These modules need to be initialized on first use:
 
@@ -39,7 +41,23 @@ Factory machine = "vdt6010-factory"
 ### Datarespons reference distro
 `$ bitbake datarespons-image`
 
-## Open items
+
+Usage
+-----
+### Rescue mode
+Forcing system into rescue mode allows re-flashing u-boot externally with factory image.
+
+Access following behind service hatch:
+* SW 1 (see table below)
+* USB_OTG to PC
+
+|Mode  |SW1-1|SW1-2|SW1-3|SW1-4|
+|------|-----|-----|-----|-----|
+|Rescue|ON   |OFF  |OFF  |ON   |
+|Normal|OFF  |ON   |ON   |OFF  |
+
+Open items
+----------
 ### u-boot:
 * Review CCM settings
 * Review pin defines
@@ -61,6 +79,6 @@ Factory machine = "vdt6010-factory"
 * xterm.service after graphical.target
 * datarespons-apps.target after graphical.target or multi-user.target depending on screen or not
 
-## Possible coming hardware changes
+### Possible coming hardware changes
 * Allow USB hub reset from SW
 	* Mount R336, Demount R335, C217
