@@ -28,11 +28,13 @@ $ source <top of project>/oe-core/oe-init-build-env build <top of project>/bitba
 
 ### Factory image
 Needed for flashing u-boot through SDP (serial download protocol).
+
 For instructions see meta-factory/README.md
+
 Factory machine = "vdt6010-factory"
 
 ### Datarespons reference distro
-`bitbake datarespons-image`
+`$ bitbake datarespons-image`
 
 ## Open items
 ### u-boot:
