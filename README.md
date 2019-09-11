@@ -1,5 +1,8 @@
 # VDT6010 SDK
 
+## Maintainer
+Mikko Salomäki <ms@datarespons.se>
+
 ## Build
 External recipe sources are included in the project as git submodules.
 These modules need to be initialized on first use:
