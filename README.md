@@ -1,8 +1,6 @@
-# Data Respons build system
+# VDT6010 SDK
 
-
-## How To Use
-
+## Build
 External recipe sources are included in the project as git submodules.
 These modules need to be initialized on first use:
 
@@ -27,8 +25,37 @@ $ export DR_BUILD_NO=<yout build number if needed>
 $ export BB_ENV_EXTRAWHITE="DR_BUILD_PLAN DR_BUILD_NO DR_CM_COMMIT"
 $ source <top of project>/oe-core/oe-init-build-env build <top of project>/bitbake/
 ```
-And now you can build:
 
-```
-$ DISTRO=your-distro MACHINE=your-machine bitbake your-image
-```
+### Factory image
+Needed for flashing u-boot through SDP (serial download protocol).
+For instructions see meta-factory/README.md
+Factory machine = "vdt6010-factory"
+
+### Datarespons reference distro
+`bitbake datarespons-image`
+
+## Open items
+### u-boot:
+* Review CCM settings
+* Review pin defines
+* Reset SPI-NOR on reboot
+* DTB in SPI-NOR
+* bootsplash
+
+### Linux:
+* bootsplash
+* Devicetree review
+* 0009-imx-serial-driver-Add-DT-option-for-non-DMA.patch -> Is this needed with newer fslc kernel?
+* Enabling imx6 PCIe driver causes race condition during boot, sometimes works with loglevel 8
+
+### factory:
+* nvram use both factory and user partitions
+
+### distro:
+* weston.service should finish before graphical.target
+* xterm.service after graphical.target
+* datarespons-apps.target after graphical.target or multi-user.target depending on screen or not
+
+## Possible coming hardware changes
+* Allow USB hub reset from SW
+	* Mount R336, Demount R335, C217
