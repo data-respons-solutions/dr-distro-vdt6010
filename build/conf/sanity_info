@@ -1,0 +1,4 @@
+SANITY_VERSION 1
+TMPDIR /opt/oe/dr-vdt6010-distro/build/tmp-glibc
+SSTATE_DIR /opt/oe/dr-vdt6010-distro/build/sstate-cache
+NATIVELSBSTRING debian-10
