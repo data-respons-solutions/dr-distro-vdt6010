@@ -54,10 +54,10 @@ Usage
 * Build tools and binaries: [Factory](#Factory)
 * Install factory tools:
 
-	`$ <top of project>/build/tmp-glibc/deploy/sdk/vdt6010-factory-tools-*.sh`
+`$ <top of project>/build/tmp-glibc/deploy/sdk/vdt6010-factory-tools-*.sh`
 * Source tools environment:
 
-	`$ . <tools install dir>/environment-setup-*`
+`$ . <tools install dir>/environment-setup-*`
 * Set system into [rescue mode](#Rescue mode).
 * Move to image directory and run build script:
 
