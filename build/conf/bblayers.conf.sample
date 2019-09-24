@@ -14,4 +14,5 @@ BBLAYERS ?= " \
   ##OEROOT##/../meta-bsp-vdt6010 \
   ##OEROOT##/../meta-datarespons \
   ##OEROOT##/../meta-factory \
+  ##OEROOT##/../meta-connectivity \
   "
