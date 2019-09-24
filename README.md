@@ -47,6 +47,9 @@ $ MACHINE=vdt6010-factory bitbake u-boot-dr-factory
 ### Datarespons reference distro
 `$ bitbake datarespons-image`
 
+### Datarespons reference distro SDK
+`$ bitbake datarespons-image -c populate_sdk`
+
 
 Usage
 -----
@@ -58,7 +61,7 @@ Usage
 * Source tools environment:
 
 `$ . <tools install dir>/environment-setup-*`
-* Set system into [rescue mode](#Rescue mode).
+* Set system into [Rescue mode](#Rescue\ mode).
 * Move to image directory and run build script:
 
 ```
@@ -66,7 +69,7 @@ $ cd <top of project>/build/tmp-glibc/deploy/images/vdt6010-factory
 $ ./factory-install.sh <spl> <uboot>
 # Note: factory-install must be run as superuser. If sudo is used then
 #       we must make sure to preserve factory tools build environment.
-				e.g: $ sudo env "PATH=$PATH" ./factory-install.sh <spl> <uboot>
+        e.g: $ sudo env "PATH=$PATH" ./factory-install.sh <spl> <uboot>
 ```
 
 ### Rescue mode
