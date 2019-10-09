@@ -17,15 +17,15 @@
 	branch = warrior
 [submodule "meta-datarespons"]
 	path = meta-datarespons
-	url = ssh://git@bitbucket.datarespons.com:7999/oe-dr/meta-datarespons.git
+	url = https://mbucket.datarespons.com/scm/oe-dr/meta-datarespons.git
 	branch = master
 [submodule "meta-bsp-vdt6010"]
 	path = meta-bsp-vdt6010
-	url = ssh://git@bitbucket.datarespons.com:7999/oe-bsp/meta-bsp-vdt6010.git
+	url = https://mbucket.datarespons.com/scm/oe-bsp/meta-bsp-vdt6010.git
 [submodule "meta-factory"]
 	path = meta-factory
-	url = ssh://git@bitbucket.datarespons.com:7999/oe-bsp/meta-factory.git
+	url = https://mbucket.datarespons.com/scm/oe-bsp/meta-factory.git
 [submodule "meta-connectivity"]
 	path = meta-connectivity
-	url = ssh://git@bitbucket.datarespons.com:7999/oe-dr/meta-connectivity.git
+	url = https://mbucket.datarespons.com/scm/oe-dr/meta-connectivity.git
 	branch = master
