@@ -40,8 +40,7 @@ Generate factory image , factory tools and u-boot(factory and production) binari
 $ bitbake factory-tools
 $ MACHINE=vdt6010-factory bitbake factory-install
 $ MACHINE=vdt6010-factory bitbake factory-image
-$ MACHINE=vdt6010-factory bitbake u-boot-dr
-$ MACHINE=vdt6010-factory bitbake u-boot-dr-factory
+$ MACHINE=vdt6010-factory bitbake u-boot
 ```
 
 ### Datarespons reference distro
@@ -61,7 +60,7 @@ Usage
 * Source tools environment:
 
 `$ . <tools install dir>/environment-setup-*`
-* Set system into [Rescue mode](#Rescue\ mode).
+* Set system into [Rescue mode](#"Rescue mode").
 * Move to image directory and run build script:
 
 ```
@@ -87,25 +86,11 @@ Access following behind service hatch:
 Open items
 ----------
 ### u-boot:
-* Review CCM settings
-* Review pin defines
-* Reset SPI-NOR on reboot
-* DTB in SPI-NOR
 * bootsplash
 
 ### Linux:
 * bootsplash
-* Devicetree review
-* 0009-imx-serial-driver-Add-DT-option-for-non-DMA.patch -> Is this needed with newer fslc kernel?
 * Enabling imx6 PCIe driver causes race condition during boot, sometimes works with loglevel 8
-
-### factory:
-* nvram use both factory and user partitions
-
-### distro:
-* weston.service should finish before graphical.target
-* xterm.service after graphical.target
-* datarespons-apps.target after graphical.target or multi-user.target depending on screen or not
 
 ### Possible coming hardware changes
 * Allow USB hub reset from SW
