@@ -16,3 +16,5 @@ BBLAYERS ?= " \
   ##OEROOT##/../meta-factory \
   ##OEROOT##/../meta-connectivity \
   "
+
+BBMASK += "meta-freescale/recipes-graphics/wayland/weston-init"
