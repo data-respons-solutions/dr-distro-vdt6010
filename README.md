@@ -60,7 +60,7 @@ Usage
 * Source tools environment:
 
 `$ . <tools install dir>/environment-setup-*`
-* Set system into [Rescue mode](#"Rescue mode").
+* Set system into [Rescue mode](#Rescue%20mode).
 * Move to image directory and run build script:
 
 ```
@@ -70,6 +70,13 @@ $ ./factory-install.sh <spl> <uboot>
 #       we must make sure to preserve factory tools build environment.
         e.g: $ sudo env "PATH=$PATH" ./factory-install.sh <spl> <uboot>
 ```
+
+### Flash u-boot bootsplash
+Supports gzipped or raw bmp. Max file size 2MB.
+
+Install by:
+
+`$ dd if=<BMP> of=/dev/$(awk 'BEGIN { FS = ":" } ; /"splash"/{ print $1 }' /proc/mtd)`
 
 ### Rescue mode
 Forcing system into rescue mode allows re-flashing u-boot externally with factory image.
@@ -85,12 +92,8 @@ Access following behind service hatch:
 
 Open items
 ----------
-### u-boot:
-* bootsplash
-
 ### Linux:
 * bootsplash
-* Enabling imx6 PCIe driver causes race condition during boot, sometimes works with loglevel 8
 
 ### Possible coming hardware changes
 * Allow USB hub reset from SW
