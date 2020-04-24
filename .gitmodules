@@ -16,14 +16,14 @@
 	branch = zeus
 [submodule "meta-datarespons"]
 	path = meta-datarespons
-	url = https://mbucket.datarespons.com/scm/oe-dr/meta-datarespons.git
+	url = ssh://git@github.com/data-respons-solutions/meta-datarespons.git
 	branch = master
 [submodule "meta-bsp-vdt6010"]
 	path = meta-bsp-vdt6010
-	url = https://mbucket.datarespons.com/scm/oe-bsp/meta-bsp-vdt6010.git
+	url = ssh://git@github.com/data-respons-solutions/meta-bsp-vdt6010.git
 [submodule "meta-connectivity"]
 	path = meta-connectivity
-	url = https://mbucket.datarespons.com/scm/oe-dr/meta-connectivity.git
+	url = ssh://git@github.com/data-respons-solutions/meta-connectivity.git
 	branch = master
 [submodule "meta-bsp-common"]
 	path = meta-bsp-common
