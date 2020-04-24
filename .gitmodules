@@ -22,14 +22,10 @@
 [submodule "meta-bsp-vdt6010"]
 	path = meta-bsp-vdt6010
 	url = https://mbucket.datarespons.com/scm/oe-bsp/meta-bsp-vdt6010.git
-[submodule "meta-factory"]
-	path = meta-factory
-	url = https://mbucket.datarespons.com/scm/oe-bsp/meta-factory.git
 [submodule "meta-connectivity"]
 	path = meta-connectivity
 	url = https://mbucket.datarespons.com/scm/oe-dr/meta-connectivity.git
 	branch = master
-[submodule "meta-qt5"]
-	path = meta-qt5
-	url = https://github.com/meta-qt5/meta-qt5.git
-	branch = warrior
+[submodule "meta-bsp-common"]
+	path = meta-bsp-common
+	url = ssh://git@github.com/data-respons-solutions/meta-bsp-common.git
