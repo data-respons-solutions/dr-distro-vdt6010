@@ -26,9 +26,6 @@ BUILDHISTORY_FEATURES = "image"
 # Remove sources after build
 INHERIT += "rm_work"
 
-INHERIT += "own-mirrors"
-SOURCE_MIRROR_URL = "git://mbucket.datarespons.com/scm/PATH;protocol=https"
-
 #
 # Machine Selection
 #
