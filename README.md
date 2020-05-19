@@ -38,9 +38,7 @@ Generate factory image , factory tools and u-boot(factory and production) binari
 
 ```
 $ bitbake factory-tools
-$ MACHINE=vdt6010-factory bitbake factory-install
 $ MACHINE=vdt6010-factory bitbake factory-image
-$ MACHINE=vdt6010-factory bitbake u-boot
 ```
 
 ### Datarespons reference distro
@@ -65,10 +63,10 @@ Usage
 
 ```
 $ cd <top of project>/build/tmp-glibc/deploy/images/vdt6010-factory
-$ ./factory-install.sh <spl> <uboot>
-# Note: factory-install must be run as superuser. If sudo is used then
+$ imx_usb -c .
+# Note: imx_usb must be run as superuser. If sudo is used then
 #       we must make sure to preserve factory tools build environment.
-        e.g: $ sudo env "PATH=$PATH" ./factory-install.sh <spl> <uboot>
+        e.g: $ sudo env "PATH=$PATH" imx_usb -c .
 ```
 
 ### Flash u-boot bootsplash
