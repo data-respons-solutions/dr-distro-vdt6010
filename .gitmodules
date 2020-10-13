@@ -39,3 +39,6 @@
 	path = meta-python2
 	url = git://git.openembedded.org/meta-python2
 	branch = dunfell
+[submodule "build/build-tools"]
+	path = build/build-tools
+	url = https://github.com/data-respons-solutions/build-tools.git
