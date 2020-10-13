@@ -15,4 +15,8 @@ BBLAYERS ?= " \
   ##OEROOT##/../meta-datarespons \
   ##OEROOT##/../meta-bsp-common \
   ##OEROOT##/../meta-connectivity \
+  ##OEROOT##/../meta-browser \
+  ##OEROOT##/../meta-clang \
+  ##OEROOT##/../meta-python2 \
+  ##OEROOT##/../meta-vdt6010 \
   "

@@ -28,3 +28,14 @@
 [submodule "meta-bsp-common"]
 	path = meta-bsp-common
 	url = ssh://git@github.com/data-respons-solutions/meta-bsp-common.git
+[submodule "meta-clang"]
+	path = meta-clang
+	url = https://github.com/kraj/meta-clang.git
+	branch = dunfell
+[submodule "meta-browser"]
+	path = meta-browser
+	url = https://github.com/OSSystems/meta-browser.git
+[submodule "meta-python2"]
+	path = meta-python2
+	url = git://git.openembedded.org/meta-python2
+	branch = dunfell
