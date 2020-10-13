@@ -4,3 +4,4 @@ build/cache
 build/conf/bblayers.conf
 build/conf/local.conf
 build/tmp-glibc
+build/workspace
