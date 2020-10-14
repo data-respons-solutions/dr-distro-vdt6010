@@ -14,6 +14,7 @@ PACKAGES = "\
 RDEPENDS_packagegroup-vdt6010-base = "\
 	swap-root \
 	image-install \
+	backlightctl \
 "
 
 RDEPENDS_packagegroup-vdt6010-browser = "\
