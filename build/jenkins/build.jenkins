@@ -133,7 +133,7 @@ pipeline {
 					sshagent (credentials: ['sftp-data-respons-solutions']) {
 						sh """
 							sftp -oBatchMode=yes ${SFTP_URL} << EOF
-							mkdir -p /${SFTP_PATH}/${GTAG}
+							mkdir /${SFTP_PATH}/${GTAG}
 							put ${IMAGE_ARTIFACTS} /${SFTP_PATH}/${GTAG}
 							quit
 							EOF
