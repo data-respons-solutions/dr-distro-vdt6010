@@ -1,0 +1,147 @@
+// Certificates and configuration:
+// Deploy:
+// .ssh/config of jenkins build user  must include config for Host ${SFTP_URL}
+// Example for SFTP_URL=ftp.datarespons.com:
+// Host ftp.datarespons.com
+//         User ms@datarespons.se
+//         IdentityFile ~/.ssh/id_rsa
+//
+
+pipeline {
+	agent any
+	
+	parameters {
+		string name: 'SSTATE', defaultValue: '${WORKSPACE}/build/sstate-cache', description: 'SSTATE directory'
+		string name: 'DOWNLOADS', defaultValue: '${WORKSPACE}/build/downloads', description: 'Downloads directory'
+		string name: 'SFTP_URL', defaultValue: 'ftp.datarespons.com', description: 'sftp server url'
+		string name: 'SFTP_PATH', defaultValue: 'dfi/products/vdt6010/image/', description: 'sftp path'
+	}
+	
+	environment {
+		BUILD_USER = "${sh (returnStdout: true, script: 'id -un').trim()}"
+		BUILD_UID = "${sh (returnStdout: true, script: 'id -u').trim()}"
+		BUILD_GID = "${sh (returnStdout: true, script: 'id -g').trim()}"
+		BUILD_HOME = "${sh (returnStdout: true, script: 'getent passwd $(id -un) | cut -d: -f6').trim()}"
+	}
+	
+	stages {
+	stage('Init') {
+		steps {
+			// Jenkins git module allows recursively updating submodules.
+			// It works fine for a clean build but consequent builds where a single submodule is updated
+			// will fail due to credentials.
+			// Workaround is to update submodules from this step instead.
+			sh """ 
+				git submodule update --init
+			"""
+		}
+	}
+	
+	stage('Container') {
+		agent {
+			dockerfile {
+				filename 'oe-build.docker'
+				dir 'build/build-tools'
+				args "-v ${SSTATE}:${SSTATE} -v ${DOWNLOADS}:${DOWNLOADS} -v ${BUILD_HOME}/.ssh:/home/${BUILD_USER}/.ssh"
+				additionalBuildArgs "--build-arg USERNAME=${BUILD_USER} --build-arg UID=${BUILD_UID} --build-arg GID=${BUILD_GID}"
+				reuseNode true
+			}
+		}
+		
+		environment {
+			GTAG = "${sh (returnStdout: true, script: 'git describe --always --tags --long --dirty').trim()}"
+			DR_CM_COMMIT = "${GTAG}"
+			DR_BUILD_NO = "${BUILD_NUMBER}"
+			DR_BUILD_PLAN = "${JOB_NAME}"
+			DISTRO = "datarespons-distro"
+			MACHINE = "vdt6010"
+			BB_ENV_EXTRAWHITE = "DR_BUILD_PLAN DR_BUILD_NO DR_CM_COMMIT MACHINE DISTRO"
+		}
+	
+		stages {
+		stage('Build-Image') {
+			environment {
+				IMAGE_NAME = "vdt6010-image"
+				IMAGE_ARTIFACTS = "workdir/tmp-glibc/deploy/images/${MACHINE}/${IMAGE_NAME}-${MACHINE}-*rootfs*"
+			}
+			
+			stages {
+			stage('Prepare') {
+				steps {
+					sh """
+						rm -rf workdir
+						TEMPLATECONF="../build/conf" source ./oe-core/oe-init-build-env workdir
+						sed -i 's|.*DL_DIR ?=.*|DL_DIR ?= "${DOWNLOADS}"|' conf/local.conf
+						sed -i 's|.*SSTATE_DIR ?=.*|SSTATE_DIR ?= "${SSTATE}"|' conf/local.conf
+					"""
+				}
+			}
+			stage('Image') {
+				steps {
+					sh """
+						TEMPLATECONF="../build/conf" source ./oe-core/oe-init-build-env workdir
+						bitbake ${IMAGE_NAME}
+					"""
+				}
+			}
+			stage('Deploy') {
+				steps {
+					sshagent (credentials: ['sftp-data-respons-solutions']) {
+						sh """
+							sftp -oBatchMode=yes ${SFTP_URL} << EOF
+							mkdir /${SFTP_PATH}/${GTAG}
+							put ${IMAGE_ARTIFACTS} /${SFTP_PATH}/${GTAG}/
+							quit
+							EOF
+						"""
+					}
+				}
+			}
+			}
+		}
+		stage('Build-Factory') {
+			environment {
+				DISTRO = "factory-distro"
+				MACHINE = "vdt6010-factory"
+				IMAGE_NAME = "factory-image"
+				IMAGE_ARTIFACTS = "workdir/tmp-glibc/deploy/images/${MACHINE}/${IMAGE_NAME}-${MACHINE}-*rootfs*"
+			}
+			
+			stages {
+			stage('Prepare') {
+				steps {
+					sh """
+						rm -rf workdir
+						TEMPLATECONF="../build/conf" source ./oe-core/oe-init-build-env workdir
+						sed -i 's|.*DL_DIR ?=.*|DL_DIR ?= "${DOWNLOADS}"|' conf/local.conf
+						sed -i 's|.*SSTATE_DIR ?=.*|SSTATE_DIR ?= "${SSTATE}"|' conf/local.conf
+					"""
+				}
+			}
+			stage('Image') {
+				steps {
+					sh """
+						TEMPLATECONF="../build/conf" source ./oe-core/oe-init-build-env workdir
+						bitbake ${IMAGE_NAME}
+					"""
+				}
+			}
+			stage('Deploy') {
+				steps {
+					sshagent (credentials: ['sftp-data-respons-solutions']) {
+						sh """
+							sftp -oBatchMode=yes ${SFTP_URL} << EOF
+							mkdir -p /${SFTP_PATH}/${GTAG}
+							put ${IMAGE_ARTIFACTS} /${SFTP_PATH}/${GTAG}
+							quit
+							EOF
+						"""
+					}
+				}
+			}
+			}
+		}
+		}
+	}
+	}
+}
