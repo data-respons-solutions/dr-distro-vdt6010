@@ -31,9 +31,11 @@ pipeline {
 			// It works fine for a clean build but consequent builds where a single submodule is updated
 			// will fail due to credentials.
 			// Workaround is to update submodules from this step instead.
-			sh """ 
-				git submodule update --init
-			"""
+			sshagent (credentials: ['github-data-respons-solutions']) {
+				sh """ 
+					git submodule update --init
+				"""
+			}
 		}
 	}
 	
