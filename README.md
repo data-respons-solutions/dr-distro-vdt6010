@@ -42,31 +42,72 @@ $ MACHINE=vdt6010-factory bitbake factory-image
 ```
 
 ### Datarespons reference distro
-`$ bitbake datarespons-image`
+`$ bitbake vdt6010-image`
 
 ### Datarespons reference distro SDK
-`$ bitbake datarespons-image -c populate_sdk`
+`$ bitbake vdt6010-image -c populate_sdk`
 
+## Usage
 
-Usage
------
-### Flash u-boot
-* Build tools and binaries: [Factory](#Factory)
-* Install factory tools:
+### Console
 
-`$ <top of project>/build/tmp-glibc/deploy/sdk/vdt6010-factory-tools-*.sh`
-* Source tools environment:
+Serial console through debug uart, baud 115200.
 
-`$ . <tools install dir>/environment-setup-*`
-* Set system into [Rescue mode](#Rescue%20mode).
-* Move to image directory and run build script:
+or
+
+ssh by certificate. Reference distro certificate in meta-datarespons/recipes-security/ssh-keys/droot
+
+`$ ssh -i droot root@ip`
+
+### Applications
+**swap-root**
+
+Update rootfs
+ 
+**image-install**
+
+Fresh install from USB
+
+**backlightctl**
+
+Control backlight by motion sensor
+
+Example:
 
 ```
-$ cd <top of project>/build/tmp-glibc/deploy/images/vdt6010-factory
-$ imx_usb -c .
-# Note: imx_usb must be run as superuser. If sudo is used then
-#       we must make sure to preserve factory tools build environment.
-        e.g: $ sudo env "PATH=$PATH" imx_usb -c .
+# Expects motion sensor connected to gpio138
+# Enable gpio interrupt
+echo rising > /sys/class/gpio/gpio138/edge
+backlightctl -t 30 -i /sys/class/gpio/gpio138 /sys/class/backlight/backlight-lvds/
+```
+
+**flash-uboot**
+
+Write uboot to spi nor flash
+
+Example:
+
+`$ flash-uboot --flash mtd --spl SPL --spl-offset 0x400 --uboot u-boot-ivt.img --write`
+
+**chromium**
+
+Web browser
+
+Example fullscreen:
+
+`$ chromium --no-sandbox --kiosk --no-first-run --incognito www.datarespons.com`
+
+**nmcli**
+
+Network configuration
+
+Example set static IP:
+
+```
+$ nmcli con mod "Wired connection 1" ipv4.address 192.168.1.170/24
+$ nmcli con mod "Wired connection 1" ipv4.gateway 192.168.1.1
+$ nmcli con mod "Wired connection 1" ipv4.dns 8.8.8.8
+$ nmcli con mod "Wired connection 1" ipv4.method manual
 ```
 
 ### Flash u-boot bootsplash
